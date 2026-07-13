@@ -133,7 +133,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, ease: "easeOut" as const }}
           src={designerPortrait}
-          alt="Portrait of Jonathan Doe, Product Designer"
+          alt="Portrait of Adebowale Taofeek A., Creative Designer"
           className="absolute inset-0 w-full h-full grayscale object-cover object-center brightness-[0.82] contrast-[1.05]"
           loading="eager"
         />

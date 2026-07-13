@@ -12,7 +12,7 @@ const testimonials = [
     role: "Creative Director, Luxe Studio",
     image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima",
     quote:
-      "Jonathan's brand identity work transformed our agency's visual language entirely. Every deliverable was precise, intentional, and beautifully crafted.",
+      "Adeboss's brand identity work transformed our brand's visual language entirely. Every deliverable was precise, intentional, and beautifully crafted.",
   },
   {
     id: "2",
@@ -44,7 +44,7 @@ const testimonials = [
     role: "Art Director, Pixel House",
     image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Segun",
     quote:
-      "Working with Jonathan is effortless. He understands the brief immediately and always delivers work that exceeds expectations.",
+      "Working with Adeboss is effortless. He understands the brief immediately and always delivers work that exceeds expectations.",
   },
 ];
 
@@ -73,8 +73,8 @@ export default function Testimonial3() {
     const total = testimonials.length;
     return [
       { ...testimonials[(currentIndex - 1 + total) % total], position: "left" as const },
-      { ...testimonials[currentIndex],                         position: "center" as const },
-      { ...testimonials[(currentIndex + 1) % total],          position: "right" as const },
+      { ...testimonials[currentIndex], position: "center" as const },
+      { ...testimonials[(currentIndex + 1) % total], position: "right" as const },
     ];
   }, [currentIndex]);
 
