@@ -3,7 +3,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { ArrowLeft } from "lucide-react";
-import AdebossJpeg from "@/assets/Adeboss.jpeg";
+// import AdebossJpeg from "@/assets/Adeboss.jpeg";
 
 const serviceLabels: Record<string, string> = {
   "01": "Brand Design",
