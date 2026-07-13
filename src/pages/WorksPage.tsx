@@ -4,6 +4,34 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { ArrowLeft } from "lucide-react";
 // import AdebossJpeg from "@/assets/Adeboss.jpeg";
+import BrandImg1 from "@/assets/Brand1.jpg";
+import BrandImg2 from "@/assets/Brand2.jpg";
+import BrandImg3 from "@/assets/Brand3.jpg";
+import BrandImg4 from "@/assets/Brand4.png";
+import BrandImg5 from "@/assets/Brand5.jpg";
+import BrandImg6 from "@/assets/Brand6.jpg";
+import BrandImg7 from "@/assets/Brand7.jpg";
+import BrandImg8 from "@/assets/Brand8.jpg";
+
+// Graphics image 
+import GraphicsImg1 from "@/assets/Graphics1.jpg";
+import GraphicsImg2 from "@/assets/Graphics2.jpg";
+import GraphicsImg3 from "@/assets/Graphics3.jpg";
+import GraphicsImg4 from "@/assets/Graphics4.jpg";
+import GraphicsImg5 from "@/assets/Graphics5.jpg";
+import GraphicsImg6 from "@/assets/Graphics6.jpg";
+
+// socails image 
+import SocialImg1 from "@/assets/Social1.jpg";
+import SocialImg2 from "@/assets/Social2.jpg";
+import SocialImg3 from "@/assets/Social3.jpg";
+import SocialImg4 from "@/assets/Social4.jpg";
+import SocialImg5 from "@/assets/Social5.jpg";
+import SocialImg6 from "@/assets/Social6.jpg";
+import SocialImg7 from "@/assets/Social7.jpg";
+import SocialImg8 from "@/assets/Social8.jpg";
+
+
 
 const serviceLabels: Record<string, string> = {
   "01": "Brand Design",
@@ -24,9 +52,9 @@ const serviceLabels: Record<string, string> = {
  * ─────────────────────────────────────────────────────────────────────────────
  */
 const serviceGallery: Record<string, string[]> = {
-  "01": [],
-  "02": [],
-  "03": [],
+  "01": [BrandImg1, BrandImg2, BrandImg3, BrandImg4, BrandImg5, BrandImg6, BrandImg7, BrandImg8],
+  "02": [GraphicsImg1, GraphicsImg2, GraphicsImg3, GraphicsImg4, GraphicsImg5, GraphicsImg6],
+  "03": [SocialImg1, SocialImg2, SocialImg3, SocialImg4, SocialImg5, SocialImg6, SocialImg7, SocialImg8],
 };
 
 export default function WorksPage() {
