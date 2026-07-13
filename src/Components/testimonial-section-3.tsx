@@ -2,15 +2,15 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 const testimonials = [
   {
     id: "1",
-    name: "Fatima Al-Rashid",
+    name: "Fatima Musa",
     role: "Creative Director, Luxe Studio",
-    image: "https://res.cloudinary.com/harshitproject/image/upload/v1746774430/member-one.png",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima",
     quote:
       "Jonathan's brand identity work transformed our agency's visual language entirely. Every deliverable was precise, intentional, and beautifully crafted.",
   },
@@ -18,7 +18,7 @@ const testimonials = [
     id: "2",
     name: "Emmanuel Obi",
     role: "Founder, Olive & Oak",
-    image: "https://res.cloudinary.com/harshitproject/image/upload/v1746774430/member-two.png",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emmanuel",
     quote:
       "Our social media engagement tripled after the poster redesign. He has an exceptional eye for hierarchy and colour.",
   },
@@ -26,15 +26,15 @@ const testimonials = [
     id: "3",
     name: "Chisom Adaeze",
     role: "Marketing Lead, BrandForge",
-    image: "https://res.cloudinary.com/harshitproject/image/upload/v1746774430/member-three.png",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Chisom",
     quote:
       "He delivered a complete graphics system under a tight deadline — flawless execution with zero revisions needed.",
   },
   {
     id: "4",
-    name: "Lara Mensah",
+    name: "Lara Adebayo",
     role: "CEO, Mint Creative",
-    image: "https://res.cloudinary.com/harshitproject/image/upload/v1746774430/member-five.png",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lara",
     quote:
       "The logo and visual identity he designed for us have become our biggest brand asset. Clients compliment it every single day.",
   },
@@ -42,7 +42,7 @@ const testimonials = [
     id: "5",
     name: "Segun Bello",
     role: "Art Director, Pixel House",
-    image: "https://res.cloudinary.com/harshitproject/image/upload/v1774017708/member-six.png",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Segun",
     quote:
       "Working with Jonathan is effortless. He understands the brief immediately and always delivers work that exceeds expectations.",
   },
@@ -50,6 +50,7 @@ const testimonials = [
 
 export default function Testimonial3() {
   const [currentIndex, setCurrentIndex] = useState(1);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -85,7 +86,7 @@ export default function Testimonial3() {
     >
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -124,9 +125,9 @@ export default function Testimonial3() {
                 )}
 
                 <motion.article
-                  layout
+                  layout={!shouldReduceMotion}
                   key={item.id}
-                  initial={{ opacity: 0, scale: 0.92 }}
+                  initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.92 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.45, type: "spring", stiffness: 80, damping: 18 }}
                   style={{ willChange: "transform, opacity" }}
