@@ -3,36 +3,35 @@ import { supabase } from '@/lib/supabase'
 import type { Project } from '@/lib/types'
 import { Trash2, ArrowUp, ArrowDown, Upload, ImageIcon } from 'lucide-react'
 
-// Import codebase default assets to enable seeding
-import BrandImg1 from "@/assets/Brand1.jpg";
-import BrandImg2 from "@/assets/Brand2.jpg";
-import BrandImg3 from "@/assets/Brand3.jpg";
-import BrandImg4 from "@/assets/Brand4.png";
-import BrandImg5 from "@/assets/Brand5.jpg";
-import BrandImg6 from "@/assets/Brand6.jpg";
-import BrandImg7 from "@/assets/Brand7.jpg";
-import BrandImg8 from "@/assets/Brand8.jpg";
-
-import GraphicsImg1 from "@/assets/Graphics1.jpg";
-import GraphicsImg2 from "@/assets/Graphics2.jpg";
-import GraphicsImg3 from "@/assets/Graphics3.jpg";
-import GraphicsImg4 from "@/assets/Graphics4.jpg";
-import GraphicsImg5 from "@/assets/Graphics5.jpg";
-import GraphicsImg6 from "@/assets/Graphics6.jpg";
-
-import SocialImg1 from "@/assets/Social1.jpg";
-import SocialImg2 from "@/assets/Social2.jpg";
-import SocialImg3 from "@/assets/Social3.jpg";
-import SocialImg4 from "@/assets/Social4.jpg";
-import SocialImg5 from "@/assets/Social5.jpg";
-import SocialImg6 from "@/assets/Social6.jpg";
-import SocialImg7 from "@/assets/Social7.jpg";
-import SocialImg8 from "@/assets/Social8.jpg";
-
 const DEFAULT_PROJECTS: Record<string, string[]> = {
-  "01": [BrandImg1, BrandImg2, BrandImg3, BrandImg4, BrandImg5, BrandImg6, BrandImg7, BrandImg8],
-  "02": [GraphicsImg1, GraphicsImg2, GraphicsImg3, GraphicsImg4, GraphicsImg5, GraphicsImg6],
-  "03": [SocialImg1, SocialImg2, SocialImg3, SocialImg4, SocialImg5, SocialImg6, SocialImg7, SocialImg8],
+  "01": [
+    "/defaults/Brand1.jpg",
+    "/defaults/Brand2.jpg",
+    "/defaults/Brand3.jpg",
+    "/defaults/Brand4.png",
+    "/defaults/Brand5.jpg",
+    "/defaults/Brand6.jpg",
+    "/defaults/Brand7.jpg",
+    "/defaults/Brand8.jpg"
+  ],
+  "02": [
+    "/defaults/Graphics1.jpg",
+    "/defaults/Graphics2.jpg",
+    "/defaults/Graphics3.jpg",
+    "/defaults/Graphics4.jpg",
+    "/defaults/Graphics5.jpg",
+    "/defaults/Graphics6.jpg"
+  ],
+  "03": [
+    "/defaults/Social1.jpg",
+    "/defaults/Social2.jpg",
+    "/defaults/Social3.jpg",
+    "/defaults/Social4.jpg",
+    "/defaults/Social5.jpg",
+    "/defaults/Social6.jpg",
+    "/defaults/Social7.jpg",
+    "/defaults/Social8.jpg"
+  ],
 };
 
 const SERVICE_TABS = [
