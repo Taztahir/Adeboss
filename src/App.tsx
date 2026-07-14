@@ -12,6 +12,7 @@ import WorksPage from './pages/WorksPage'
 import ProtectedRoute from './Components/ProtectedRoute'
 import AdminLogin from './pages/admin/Login'
 import AdminDashboard from './pages/admin/Dashboard'
+import NotFoundPage from './pages/NotFound'
 
 function HomePage() {
   return (
@@ -43,6 +44,9 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/admin" element={<AdminDashboard />} />
         </Route>
+
+        {/* ── Catch-all 404 route ── */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   )
