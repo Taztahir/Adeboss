@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import LazyImage from "@/Components/LazyImage";
 
 const serviceLabels: Record<string, string> = {
   "01": "Brand Design",
@@ -137,12 +138,11 @@ export default function WorksPage() {
                 transition={{ delay: i * 0.07, duration: 0.4, ease: "easeOut" }}
                 className="break-inside-avoid mb-2 sm:mb-3 overflow-hidden block group"
               >
-                <img
+                <LazyImage
                   src={src}
                   alt=""
                   role="presentation"
                   className="w-full block group-hover:scale-[1.015] transition-transform duration-500 ease-out"
-                  loading={i < 3 ? "eager" : "lazy"}
                   draggable={false}
                 />
               </motion.div>

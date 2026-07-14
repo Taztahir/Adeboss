@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
 import type { Project } from '@/lib/types'
 import { Trash2, ArrowUp, ArrowDown, Upload, ImageIcon } from 'lucide-react'
+import LazyImage from '@/Components/LazyImage'
 
 const DEFAULT_PROJECTS: Record<string, string[]> = {
   "01": [
@@ -279,11 +280,10 @@ export default function ProjectsEditor() {
                 className="relative group overflow-hidden aspect-square"
                 style={{ border: '1px solid rgba(255,255,255,0.08)' }}
               >
-                <img
+                <LazyImage
                   src={proj.image_url}
                   alt={proj.title ?? `Project image ${i + 1}`}
                   className="w-full h-full object-cover"
-                  loading="lazy"
                 />
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
