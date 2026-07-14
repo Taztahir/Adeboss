@@ -9,6 +9,9 @@ import ToolsSection from './Components/tools-section'
 import Testimonial3 from './Components/testimonial-section-3'
 import Footer from './Components/footer-section-1'
 import WorksPage from './pages/WorksPage'
+import ProtectedRoute from './Components/ProtectedRoute'
+import AdminLogin from './pages/admin/Login'
+import AdminDashboard from './pages/admin/Dashboard'
 
 function HomePage() {
   return (
@@ -31,8 +34,15 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
+        {/* ── Public routes ── */}
         <Route path="/" element={<HomePage />} />
         <Route path="/works/:serviceId" element={<WorksPage />} />
+
+        {/* ── Admin routes ── */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

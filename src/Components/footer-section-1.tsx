@@ -1,6 +1,6 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import { supabase } from "@/lib/supabase";
 
 const followLinks = [
   { name: "Instagram", href: "https://www.instagram.com/adebowaletaofeekadewale?igsh=MWl0b2RqMDBucmV3dA==" },
@@ -12,6 +12,30 @@ const followLinks = [
 
 export default function Footer1() {
   const shouldReduceMotion = useReducedMotion();
+  const [contact, setContact] = useState({
+    blurb: "I am always open to discussing new design challenges, branding projects, or print design systems. Let's create something beautiful and functional together.",
+    email: "adebowaletaofeek74@gmail.com",
+    phone: "+234 811 194 6901",
+    cv_url: "#"
+  });
+
+  useEffect(() => {
+    supabase
+      .from('site_content')
+      .select('contact_blurb, contact_email, contact_phone, cv_url')
+      .eq('id', 1)
+      .single()
+      .then(({ data }) => {
+        if (data) {
+          setContact({
+            blurb: data.contact_blurb,
+            email: data.contact_email,
+            phone: data.contact_phone,
+            cv_url: data.cv_url || "#"
+          });
+        }
+      });
+  }, []);
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
@@ -64,14 +88,14 @@ export default function Footer1() {
             className="md:col-span-5 flex flex-col gap-8"
           >
             <p className="font-sans text-sm sm:text-base leading-relaxed text-[var(--hudson-navbar-fg-muted)] max-w-sm">
-              I am always open to discussing new design challenges, branding projects, or print design systems. Let's create something beautiful and functional together.
+              {contact.blurb}
             </p>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
               {/* MESSAGE ME — filled accent */}
               <a
-                href="mailto:adebowaletaofeek74@gmail.com"
+                href={`mailto:${contact.email}`}
                 className="flex-1 inline-flex items-center justify-center px-6 py-4 bg-[var(--hudson-navbar-accent)] text-white font-sans text-xs font-bold tracking-[0.2em] uppercase hover:opacity-90 transition-opacity duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hudson-navbar-accent)]"
               >
                 Message Me
@@ -79,7 +103,9 @@ export default function Footer1() {
 
               {/* GET MY CV — outlined */}
               <a
-                href="#"
+                href={contact.cv_url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex-1 inline-flex items-center justify-center px-6 py-4 border border-[var(--hudson-navbar-fg)]/30 text-[var(--hudson-navbar-fg)] font-sans text-xs font-bold tracking-[0.2em] uppercase hover:border-[var(--hudson-navbar-fg)]/70 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 aria-label="Download CV"
               >
@@ -128,20 +154,20 @@ export default function Footer1() {
               <ul className="flex flex-col gap-3">
                 <li>
                   <a
-                    href="mailto:adebowaletaofeek74@gmail.com"
+                    href={`mailto:${contact.email}`}
                     className="font-sans text-sm text-[var(--hudson-navbar-fg-muted)] hover:text-[var(--hudson-navbar-fg)] transition-colors duration-200"
                   >
-                    adebowaletaofeek74@gmail.com
+                    {contact.email}
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://wa.me/08111946901"
+                    href={`https://wa.me/${contact.phone.replace(/[^0-9]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-sans text-sm text-[var(--hudson-navbar-fg-muted)] hover:text-[var(--hudson-navbar-fg)] transition-colors duration-200"
                   >
-                    +234 811 194 6901
+                    {contact.phone}
                   </a>
                 </li>
               </ul>

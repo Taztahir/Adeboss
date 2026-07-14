@@ -1,13 +1,31 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import ScrollReveal from "./ScrollReveal";
+import { supabase } from "@/lib/supabase";
 
 export default function AboutSection() {
-  const paragraph1 =
-    "I am Adebowale Taofeek A., a creative designer with multiple years of experience in the design and print industry. My expertise across different fields helps me to create designs that are not only aesthetically pleasing but also functional.";
+  const [paragraphs, setParagraphs] = useState({
+    p1: "I am Adebowale Taofeek A., a creative designer with multiple years of experience in the design and print industry. My expertise across different fields helps me to create designs that are not only aesthetically pleasing but also functional.",
+    p2: "Over the years, I've worked with multiple brands and niches spanning across Tech, Beauty, Furniture amongst others. My work process is a combination of deep research and careful thought process which allows me to build a functional design system."
+  });
 
-  const paragraph2 =
-    "Over the years, I've worked with multiple brands and niches spanning across Tech, Beauty, Furniture amongst others. My work process is a combination of deep research and careful thought process which allows me to build a functional design system.";
+  useEffect(() => {
+    supabase
+      .from('site_content')
+      .select('about_paragraph_1, about_paragraph_2')
+      .eq('id', 1)
+      .single()
+      .then(({ data }) => {
+        if (data) {
+          setParagraphs({
+            p1: data.about_paragraph_1,
+            p2: data.about_paragraph_2
+          });
+        }
+      });
+  }, []);
+
+  const paragraph1 = paragraphs.p1;
+  const paragraph2 = paragraphs.p2;
 
   return (
     <section

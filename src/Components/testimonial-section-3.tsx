@@ -1,11 +1,10 @@
-"use client";
-
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabase";
 
-const testimonials = [
+const INITIAL_TESTIMONIALS = [
   {
     id: "1",
     name: "Fatima Musa",
@@ -49,8 +48,27 @@ const testimonials = [
 ];
 
 export default function Testimonial3() {
+  const [testimonials, setTestimonials] = useState(INITIAL_TESTIMONIALS);
   const [currentIndex, setCurrentIndex] = useState(1);
   const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    supabase
+      .from('testimonials')
+      .select('*')
+      .order('display_order')
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          setTestimonials(data.map(item => ({
+            id: item.id,
+            name: item.name,
+            role: item.role,
+            image: item.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${item.name}`,
+            quote: item.quote
+          })));
+        }
+      });
+  }, []);
 
   const handleNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);

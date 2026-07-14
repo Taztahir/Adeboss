@@ -1,8 +1,8 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 interface Service {
   id: string;
@@ -11,7 +11,7 @@ interface Service {
   tags: string[];
 }
 
-const services: Service[] = [
+const INITIAL_SERVICES: Service[] = [
   {
     id: "01",
     title: "Brand Design",
@@ -38,6 +38,24 @@ const services: Service[] = [
 export default function ServicesSection() {
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
+  const [services, setServices] = useState<Service[]>(INITIAL_SERVICES);
+
+  useEffect(() => {
+    supabase
+      .from('services')
+      .select('*')
+      .order('slug')
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          setServices(data.map(item => ({
+            id: item.slug,
+            title: item.title,
+            description: item.description,
+            tags: item.tags
+          })));
+        }
+      });
+  }, []);
 
   const headingVariants: Variants = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 24 },

@@ -1,9 +1,9 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { ArrowLeft } from "lucide-react";
-// import AdebossJpeg from "@/assets/Adeboss.jpeg";
+import { supabase } from "@/lib/supabase";
+
 import BrandImg1 from "@/assets/Brand1.jpg";
 import BrandImg2 from "@/assets/Brand2.jpg";
 import BrandImg3 from "@/assets/Brand3.jpg";
@@ -13,7 +13,6 @@ import BrandImg6 from "@/assets/Brand6.jpg";
 import BrandImg7 from "@/assets/Brand7.jpg";
 import BrandImg8 from "@/assets/Brand8.jpg";
 
-// Graphics image 
 import GraphicsImg1 from "@/assets/Graphics1.jpg";
 import GraphicsImg2 from "@/assets/Graphics2.jpg";
 import GraphicsImg3 from "@/assets/Graphics3.jpg";
@@ -21,7 +20,6 @@ import GraphicsImg4 from "@/assets/Graphics4.jpg";
 import GraphicsImg5 from "@/assets/Graphics5.jpg";
 import GraphicsImg6 from "@/assets/Graphics6.jpg";
 
-// socails image 
 import SocialImg1 from "@/assets/Social1.jpg";
 import SocialImg2 from "@/assets/Social2.jpg";
 import SocialImg3 from "@/assets/Social3.jpg";
@@ -31,26 +29,12 @@ import SocialImg6 from "@/assets/Social6.jpg";
 import SocialImg7 from "@/assets/Social7.jpg";
 import SocialImg8 from "@/assets/Social8.jpg";
 
-
-
 const serviceLabels: Record<string, string> = {
   "01": "Brand Design",
   "02": "Graphics Design",
   "03": "Social Media Poster",
 };
 
-/**
- * ─────────────────────────────────────────────────────────────────────────────
- * ADD YOUR REAL PORTFOLIO IMAGES HERE
- * Import each image at the top and add its variable to the correct array below.
- *
- * Example:
- *   import brandWork1 from "@/assets/works/brand-1.jpg";
- *   import brandWork2 from "@/assets/works/brand-2.jpg";
- *
- *   "01": [brandWork1, brandWork2, ...],
- * ─────────────────────────────────────────────────────────────────────────────
- */
 const serviceGallery: Record<string, string[]> = {
   "01": [BrandImg1, BrandImg2, BrandImg3, BrandImg4, BrandImg5, BrandImg6, BrandImg7, BrandImg8],
   "02": [GraphicsImg1, GraphicsImg2, GraphicsImg3, GraphicsImg4, GraphicsImg5, GraphicsImg6],
@@ -61,8 +45,42 @@ export default function WorksPage() {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
 
-  const label = serviceId ? (serviceLabels[serviceId] ?? "Works") : "Works";
-  const images = serviceId ? (serviceGallery[serviceId] ?? []) : [];
+  const [images, setImages] = useState<string[]>([]);
+  const [label, setLabel] = useState(() => {
+    return serviceId ? (serviceLabels[serviceId] ?? "Works") : "Works";
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!serviceId) return;
+    setLoading(true);
+
+    // Fetch dynamic title if exists
+    supabase
+      .from('services')
+      .select('title')
+      .eq('slug', serviceId)
+      .single()
+      .then(({ data }) => {
+        if (data) setLabel(data.title);
+      });
+
+    // Fetch project images
+    supabase
+      .from('projects')
+      .select('image_url')
+      .eq('service_slug', serviceId)
+      .order('display_order')
+      .then(({ data, error }) => {
+        if (!error && data && data.length > 0) {
+          setImages(data.map(item => item.image_url));
+        } else {
+          // If no images returned from DB, fall back to initial static gallery
+          setImages(serviceGallery[serviceId] ?? []);
+        }
+        setLoading(false);
+      });
+  }, [serviceId]);
 
   return (
     <div className="min-h-screen bg-[var(--hudson-navbar-bg)]">
@@ -103,7 +121,13 @@ export default function WorksPage() {
         className="pt-24 px-4 sm:px-6 pb-16"
         aria-label={`${label} portfolio gallery`}
       >
-        {images.length > 0 ? (
+        {loading ? (
+          <div className="flex flex-col items-center justify-center min-h-[60vh]">
+            <span className="font-mono text-xs text-[var(--hudson-navbar-fg-muted)] tracking-widest animate-pulse">
+              Loading works…
+            </span>
+          </div>
+        ) : images.length > 0 ? (
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-2 sm:gap-3">
             {images.map((src, i) => (
               <motion.div

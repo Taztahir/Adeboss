@@ -1,10 +1,32 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import designerPortrait from "@/assets/Adeboss.jpeg";
+import { supabase } from "@/lib/supabase";
 
 export default function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
+  const [content, setContent] = useState({
+    hero_greeting: "Hello",
+    hero_name: "I'm Adebowale\nTaofeek A.",
+    hero_tagline: "a creative designer"
+  });
+
+  useEffect(() => {
+    supabase
+      .from('site_content')
+      .select('hero_greeting, hero_name, hero_tagline')
+      .eq('id', 1)
+      .single()
+      .then(({ data }) => {
+        if (data) {
+          setContent({
+            hero_greeting: data.hero_greeting,
+            hero_name: data.hero_name,
+            hero_tagline: data.hero_tagline
+          });
+        }
+      });
+  }, []);
 
   const slideUp: Variants = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 32 },
@@ -90,7 +112,7 @@ export default function HeroSection() {
             variants={slideUp}
             className="inline-block text-[var(--hudson-hero-left-accent)] font-sans text-xs font-bold tracking-[0.2em] uppercase"
           >
-            Hello
+            {content.hero_greeting}
           </motion.span>
 
           {/* Heading */}
@@ -98,11 +120,14 @@ export default function HeroSection() {
             variants={slideUp}
             className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold tracking-tight text-[var(--hudson-hero-left-text)] leading-[1.08]"
           >
-            I'm Adebowale
+            {content.hero_name.split('\n').map((line, idx) => (
+              <span key={idx}>
+                {line}
+                {idx < content.hero_name.split('\n').length - 1 && <br />}
+              </span>
+            ))}
             <br />
-            Taofeek A.
-            <br />
-            a creative designer<span className="text-[var(--hudson-hero-left-accent)]">.</span>
+            {content.hero_tagline}<span className="text-[var(--hudson-hero-left-accent)]">.</span>
           </motion.h1>
 
           {/* CTA buttons */}
